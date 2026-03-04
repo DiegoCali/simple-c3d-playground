@@ -1,0 +1,153 @@
+/* Global Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Code Editor */
+#codeEditor {
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+    border-radius: 0;
+    resize: none;
+    height: 100%;
+    min-height: 500px;
+}
+
+#codeEditor:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+/* Output Panel */
+.output-panel {
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 13px;
+    background-color: #2d2d2d;
+    color: #d4d4d4;
+    padding: 12px;
+    border-radius: 4px;
+    min-height: 150px;
+    max-height: 200px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+.output-line {
+    margin: 2px 0;
+}
+
+.output-print {
+    color: #4ec9b0;
+}
+
+.output-error {
+    color: #f48771;
+    font-weight: bold;
+}
+
+.output-success {
+    color: #b5cea8;
+}
+
+.output-info {
+    color: #9cdcfe;
+}
+
+/* Variables Display */
+#variablesDisplay {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 10px;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 12px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.variable-item {
+    padding: 4px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.variable-item:last-child {
+    border-bottom: none;
+}
+
+.variable-name {
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+.variable-value {
+    color: #198754;
+}
+
+/* Graph Container for Mermaid */
+.graph-container {
+    width: 100%;
+    min-height: 400px;
+    max-height: 600px;
+    overflow: auto;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.graph-container .mermaid {
+    width: 100%;
+    min-height: 300px;
+}
+
+.graph-container svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Card Styles */
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.card-header h6 {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    #codeEditor {
+        min-height: 300px;
+    }
+    
+    .graph-container {
+        min-height: 350px;
+    }
+}
+
+@media (max-width: 767px) {
+    .btn-toolbar .btn-group {
+        margin-bottom: 10px;
+    }
+    
+    #codeEditor {
+        min-height: 250px;
+    }
+    
+    .output-panel {
+        min-height: 120px;
+        max-height: 150px;
+    }
+    
+    .graph-container {
+        min-height: 300px;
+    }
+}

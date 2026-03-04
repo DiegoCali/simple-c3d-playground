@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación - C3D Playground</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="style.css" rel="stylesheet">
+    
+    <style>
+        .doc-section {
+            margin-bottom: 3rem;
+        }
+        
+        .doc-section h2 {
+            color: #212529;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .doc-section h3 {
+            color: #495057;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        pre {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .syntax-box {
+            background-color: #fff;
+            border-left: 4px solid #6c757d;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .example-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .example-box h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            margin: 1rem 0;
+        }
+        
+        .doc-content {
+            max-width: 900px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">C3D Playground</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Playground</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="docs.html">Documentación</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 doc-content">
+                
+                <!-- Header -->
+                <div class="mb-5">
+                    <h1 class="display-5 mb-3">Documentación del Lenguaje C3D</h1>
+                    <p class="lead text-muted">
+                        Referencia completa del lenguaje de Código de Tres Direcciones implementado
+                        en este playground educativo.
+                    </p>
+                </div>
+
+                <!-- 1. Introducción -->
+                <section class="doc-section" id="introduccion">
+                    <h2>1. Introducción</h2>
+                    
+                    <p>
+                        El <strong>Código de Tres Direcciones</strong> (Three-Address Code o TAC) es una 
+                        representación intermedia utilizada en compiladores para facilitar el análisis, 
+                        optimización y generación de código. Se caracteriza por ser un lenguaje de bajo 
+                        nivel que descompone expresiones complejas en instrucciones simples, donde cada 
+                        instrucción realiza, como máximo, una operación básica.
+                    </p>
+                    
+                    <p>
+                        Esta implementación es una <strong>versión simplificada con fines educativos</strong>, 
+                        diseñada para ilustrar los conceptos fundamentales de una Representación Intermedia (IR) 
+                        en el contexto de la construcción de compiladores. El lenguaje implementado modela:
+                    </p>
+                    
+                    <ul>
+                        <li>Asignaciones simples y con operadores binarios</li>
+                        <li>Operaciones aritméticas y relacionales</li>
+                        <li>Control de flujo mediante etiquetas y saltos</li>
+                        <li>Operaciones de entrada/salida básicas</li>
+                    </ul>
+                    
+                    <p>
+                        El propósito de este playground es proporcionar un entorno interactivo para 
+                        comprender cómo funcionan las representaciones intermedias, cómo se estructuran 
+                        los bloques básicos y cómo se construye el grafo de flujo de control de un programa.
+                    </p>
+                </section>
+
+                <!-- 2. Variables -->
+                <section class="doc-section" id="variables">
+                    <h2>2. Variables</h2>
+                    
+                    <p>
+                        Las variables en C3D son <strong>dinámicas</strong> y se crean implícitamente 
+                        en el momento de su primera asignación. No requieren declaración previa ni 
+                        especificación de tipo.
+                    </p>
+                    
+                    <h3>Características</h3>
+                    <ul>
+                        <li><strong>Nombres:</strong> Identificadores alfanuméricos que comienzan con letra o guion bajo (ej. <code>t1</code>, <code>contador</code>, <code>x</code>)</li>
+                        <li><strong>Creación implícita:</strong> Se crean automáticamente al realizar la primera asignación</li>
+                        <li><strong>Tipado dinámico:</strong> Todas las variables almacenan valores numéricos (punto flotante)</li>
+                        <li><strong>Alcance global:</strong> Todas las variables son accesibles en todo el programa</li>
+                    </ul>
+                    
+                    <h3>Literales Numéricos</h3>
+                    <p>
+                        El lenguaje soporta literales numéricos enteros y de punto flotante:
+                    </p>
+                    <ul>
+                        <li>Enteros: <code>5</code>, <code>42</code>, <code>-10</code></li>
+                        <li>Punto flotante: <code>3.14</code>, <code>-2.5</code>, <code>0.001</code></li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplos</h4>
+                        <pre><code>t1 = 5
+x = t1
+contador = 0
+pi = 3.14159
+temp = x</code></pre>
+                    </div>
+                    
+                    <p>
+                        <strong>Nota:</strong> No existe distinción entre variables temporales (como <code>t1</code>) 
+                        y variables con nombres descriptivos. Todas se tratan de la misma manera por el intérprete.
+                    </p>
+                </section>
+
+                <!-- 3. Expresiones Aritméticas -->
+                <section class="doc-section" id="expresiones-aritmeticas">
+                    <h2>3. Expresiones Aritméticas</h2>
+                    
+                    <p>
+                        Las expresiones aritméticas en C3D siguen el formato de tres direcciones, 
+                        donde cada instrucción contiene como máximo un operador binario.
+                    </p>
+                    
+                    <h3>Operadores Soportados</h3>
+                    
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Operador</th>
+                                <th>Descripción</th>
+                                <th>Ejemplo</th>
+                                <th>Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>+</code></td>
+                                <td>Suma</td>
+                                <td><code>t1 = a + b</code></td>
+                                <td>Suma de <code>a</code> y <code>b</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>-</code></td>
+                                <td>Resta</td>
+                                <td><code>t2 = a - b</code></td>
+                                <td>Resta de <code>a</code> menos <code>b</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>*</code></td>
+                                <td>Multiplicación</td>
+                                <td><code>t3 = a * b</code></td>
+                                <td>Producto de <code>a</code> y <code>b</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>/</code></td>
+                                <td>División</td>
+                                <td><code>t4 = a / b</code></td>
+                                <td>División de <code>a</code> entre <code>b</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>Forma General</h3>
+                    <div class="syntax-box">
+                        <code>destino = operando1 operador operando2</code>
+                    </div>
+                    
+                    <p>Donde:</p>
+                    <ul>
+                        <li><code>destino</code>: Variable que recibirá el resultado</li>
+                        <li><code>operando1</code>, <code>operando2</code>: Variables o literales numéricos</li>
+                        <li><code>operador</code>: Uno de los operadores aritméticos soportados</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplos</h4>
+                        <pre><code>// Operaciones con variables
+t1 = a + b
+t2 = t1 * 4
+t3 = t2 - 10
+
+// Operaciones con literales
+x = 5 + 3
+y = x * 2
+z = y / 4
+
+// Operaciones mixtas
+resultado = x + 100
+temp = resultado * y</code></pre>
+                    </div>
+                    
+                    <h3>Evaluación</h3>
+                    <p>
+                        Las expresiones se evalúan de derecha a izquierda. Primero se resuelven 
+                        los operandos (obteniendo sus valores), luego se aplica el operador, y 
+                        finalmente se almacena el resultado en la variable destino.
+                    </p>
+                    
+                    <p>
+                        <strong>Nota sobre división por cero:</strong> La división por cero genera 
+                        un error de ejecución que detiene el programa.
+                    </p>
+                </section>
+
+                <!-- 4. Expresiones Relacionales y Lógicas -->
+                <section class="doc-section" id="expresiones-relacionales">
+                    <h2>4. Expresiones Relacionales y Lógicas</h2>
+                    
+                    <p>
+                        Los operadores relacionales permiten comparar valores. El resultado de una 
+                        comparación es un valor booleano representado numéricamente: <code>1</code> 
+                        para verdadero y <code>0</code> para falso.
+                    </p>
+                    
+                    <h3>Operadores Relacionales</h3>
+                    
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Operador</th>
+                                <th>Descripción</th>
+                                <th>Ejemplo</th>
+                                <th>Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>&gt;</code></td>
+                                <td>Mayor que</td>
+                                <td><code>t1 = a &gt; b</code></td>
+                                <td><code>1</code> si a > b, sino <code>0</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>&lt;</code></td>
+                                <td>Menor que</td>
+                                <td><code>t2 = a &lt; b</code></td>
+                                <td><code>1</code> si a < b, sino <code>0</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>&gt;=</code></td>
+                                <td>Mayor o igual</td>
+                                <td><code>t3 = a &gt;= b</code></td>
+                                <td><code>1</code> si a >= b, sino <code>0</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>&lt;=</code></td>
+                                <td>Menor o igual</td>
+                                <td><code>t4 = a &lt;= b</code></td>
+                                <td><code>1</code> si a <= b, sino <code>0</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>==</code></td>
+                                <td>Igual a</td>
+                                <td><code>t5 = a == b</code></td>
+                                <td><code>1</code> si a == b, sino <code>0</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>!=</code></td>
+                                <td>Diferente de</td>
+                                <td><code>t6 = a != b</code></td>
+                                <td><code>1</code> si a != b, sino <code>0</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>Operadores Lógicos</h3>
+                    
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Operador</th>
+                                <th>Descripción</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>&&</code></td>
+                                <td>AND lógico</td>
+                                <td><code>t1 = a && b</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>||</code></td>
+                                <td>OR lógico</td>
+                                <td><code>t2 = a || b</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplos</h4>
+                        <pre><code>// Comparaciones simples
+t1 = a > b
+t2 = x <= 10
+t3 = contador == 0
+
+// Uso en decisiones
+flag = i < n
+if flag > 0 goto Loop
+
+// Operadores lógicos
+t4 = a > 0 && b > 0
+t5 = x < 0 || y < 0</code></pre>
+                    </div>
+                    
+                    <h3>Semántica de Evaluación</h3>
+                    <p>
+                        Los operadores relacionales y lógicos se evalúan según las reglas estándar:
+                    </p>
+                    <ul>
+                        <li>Se obtienen los valores numéricos de ambos operandos</li>
+                        <li>Se realiza la comparación o operación lógica</li>
+                        <li>El resultado es <code>1</code> (verdadero) o <code>0</code> (falso)</li>
+                        <li>Este resultado se almacena en la variable destino</li>
+                    </ul>
+                </section>
+
+                <!-- 5. Labels (Etiquetas) -->
+                <section class="doc-section" id="labels">
+                    <h2>5. Labels (Etiquetas)</h2>
+                    
+                    <p>
+                        Las etiquetas son marcadores que identifican puntos específicos en el código. 
+                        Son fundamentales para el control de flujo, ya que sirven como destinos para 
+                        las instrucciones de salto.
+                    </p>
+                    
+                    <h3>Sintaxis</h3>
+                    <div class="syntax-box">
+                        <code>NombreEtiqueta:</code>
+                    </div>
+                    
+                    <p>
+                        Una etiqueta consiste en un identificador seguido de dos puntos (<code>:</code>). 
+                        Debe aparecer en su propia línea.
+                    </p>
+                    
+                    <h3>Características</h3>
+                    <ul>
+                        <li><strong>Definen bloques básicos:</strong> Una etiqueta marca el inicio de un nuevo bloque básico</li>
+                        <li><strong>Destinos de salto:</strong> Son referenciadas por instrucciones <code>goto</code> e <code>if ... goto</code></li>
+                        <li><strong>Únicas:</strong> Cada etiqueta debe ser única en el programa</li>
+                        <li><strong>Resolución:</strong> Las etiquetas se resuelven antes de la ejecución del programa</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplos</h4>
+                        <pre><code>// Etiqueta simple
+Inicio:
+    x = 0
+
+// Etiqueta para bucle
+Loop:
+    x = x + 1
+    if x < 10 goto Loop
+
+// Etiqueta para condición
+Mayor:
+    print 1
+    goto Fin
+    
+Menor:
+    print 0
+    
+Fin:
+    end</code></pre>
+                    </div>
+                    
+                    <h3>Bloques Básicos</h3>
+                    <p>
+                        Un <strong>bloque básico</strong> es una secuencia de instrucciones donde:
+                    </p>
+                    <ul>
+                        <li>El flujo de control entra únicamente por el principio (la etiqueta)</li>
+                        <li>El flujo de control sale únicamente por el final</li>
+                        <li>No hay saltos en medio del bloque</li>
+                    </ul>
+                    
+                    <p>
+                        Las etiquetas marcan el inicio de cada bloque básico. Un bloque termina cuando:
+                    </p>
+                    <ul>
+                        <li>Se encuentra una instrucción <code>goto</code> o <code>if ... goto</code></li>
+                        <li>Se encuentra una instrucción <code>end</code></li>
+                        <li>Se encuentra otra etiqueta</li>
+                    </ul>
+                </section>
+
+                <!-- 6. Goto Incondicional -->
+                <section class="doc-section" id="goto-incondicional">
+                    <h2>6. Goto Incondicional</h2>
+                    
+                    <p>
+                        La instrucción <code>goto</code> realiza una <strong>transferencia incondicional</strong> 
+                        del control de flujo hacia la etiqueta especificada.
+                    </p>
+                    
+                    <h3>Sintaxis</h3>
+                    <div class="syntax-box">
+                        <code>goto Etiqueta</code>
+                    </div>
+                    
+                    <h3>Comportamiento</h3>
+                    <p>
+                        Cuando se ejecuta una instrucción <code>goto</code>:
+                    </p>
+                    <ol>
+                        <li>Se busca la etiqueta especificada en el programa</li>
+                        <li>La ejecución continúa inmediatamente después de dicha etiqueta</li>
+                        <li>No se evalúa ninguna condición</li>
+                        <li>El salto siempre ocurre</li>
+                    </ol>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplo: Bucle Infinito</h4>
+                        <pre><code>Loop:
+    print 1
+    goto Loop</code></pre>
+                        <p class="text-muted small mb-0">
+                            Este código imprime <code>1</code> indefinidamente hasta alcanzar el límite de iteraciones.
+                        </p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplo: Saltar Código</h4>
+                        <pre><code>x = 10
+goto Fin
+
+// Este código nunca se ejecuta
+x = 20
+print x
+
+Fin:
+print x
+end</code></pre>
+                        <p class="text-muted small mb-0">
+                            Resultado: Imprime <code>10</code> (el código intermedio se salta).
+                        </p>
+                    </div>
+                    
+                    <h3>Uso en Compiladores</h3>
+                    <p>
+                        En el contexto de código intermedio, el <code>goto</code> incondicional se utiliza para:
+                    </p>
+                    <ul>
+                        <li>Implementar bucles</li>
+                        <li>Salir de estructuras de control</li>
+                        <li>Simplificar el flujo de control eliminando estructuras anidadas</li>
+                    </ul>
+                    
+                    <p>
+                        <strong>Nota:</strong> Si la etiqueta no existe, se genera un error de ejecución.
+                    </p>
+                </section>
+
+                <!-- 7. Goto Condicional -->
+                <section class="doc-section" id="goto-condicional">
+                    <h2>7. Goto Condicional</h2>
+                    
+                    <p>
+                        La instrucción <code>if ... goto</code> realiza una <strong>transferencia condicional</strong> 
+                        del control de flujo. El salto solo ocurre si la condición evaluada es verdadera.
+                    </p>
+                    
+                    <h3>Sintaxis</h3>
+                    <div class="syntax-box">
+                        <code>if condición goto Etiqueta</code>
+                    </div>
+                    
+                    <p>Donde <code>condición</code> es una expresión relacional que se evalúa a verdadero o falso.</p>
+                    
+                    <h3>Comportamiento</h3>
+                    <p>
+                        Cuando se ejecuta una instrucción <code>if ... goto</code>:
+                    </p>
+                    <ol>
+                        <li>Se evalúa la condición</li>
+                        <li><strong>Si la condición es verdadera</strong> (valor diferente de 0):
+                            <ul>
+                                <li>Se realiza el salto a la etiqueta especificada</li>
+                            </ul>
+                        </li>
+                        <li><strong>Si la condición es falsa</strong> (valor 0):
+                            <ul>
+                                <li>La ejecución continúa secuencialmente con la siguiente instrucción</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplo: Bucle While</h4>
+                        <pre><code>// Simula: while (i < 10) { ... }
+i = 0
+
+Loop:
+if i >= 10 goto End
+print i
+i = i + 1
+goto Loop
+
+End:
+end</code></pre>
+                        <p class="text-muted small mb-0">
+                            Imprime los números del 0 al 9.
+                        </p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplo: Condicional If-Else</h4>
+                        <pre><code>// Simula: if (a > b) { ... } else { ... }
+t1 = a > b
+if t1 == 0 goto Else
+
+// Rama then
+print 1
+goto Fin
+
+Else:
+// Rama else
+print 0
+
+Fin:
+end</code></pre>
+                    </div>
+                    
+                    <h3>Operadores en Condiciones</h3>
+                    <p>
+                        Las condiciones pueden usar cualquier operador relacional o lógico soportado:
+                    </p>
+                    <ul>
+                        <li><code>if x > 0 goto Positivo</code></li>
+                        <li><code>if a <= b goto Menor</code></li>
+                        <li><code>if flag == 1 goto Activo</code></li>
+                        <li><code>if x != 0 goto Continuar</code></li>
+                    </ul>
+                    
+                    <h3>Representación en el Grafo</h3>
+                    <p>
+                        En el grafo de flujo de control, una instrucción <code>if ... goto</code> genera:
+                    </p>
+                    <ul>
+                        <li>Un <strong>edge etiquetado "true"</strong> hacia el bloque destino (si la condición es verdadera)</li>
+                        <li>Un <strong>edge etiquetado "false"</strong> hacia el siguiente bloque secuencial (si la condición es falsa)</li>
+                    </ul>
+                </section>
+
+                <!-- 8. Funciones Especiales -->
+                <section class="doc-section" id="funciones-especiales">
+                    <h2>8. Funciones Especiales</h2>
+                    
+                    <p>
+                        El lenguaje proporciona dos funciones especiales para control de ejecución y salida.
+                    </p>
+                    
+                    <h3>Instrucción print</h3>
+                    
+                    <h4>Sintaxis</h4>
+                    <div class="syntax-box">
+                        <code>print expresión</code>
+                    </div>
+                    
+                    <p>
+                        La instrucción <code>print</code> envía un valor al panel de salida en la interfaz del playground.
+                    </p>
+                    
+                    <h4>Comportamiento</h4>
+                    <ul>
+                        <li>Evalúa la expresión (variable o literal)</li>
+                        <li>Convierte el resultado a cadena de texto</li>
+                        <li>Muestra el valor en el panel de salida</li>
+                        <li>La ejecución continúa con la siguiente instrucción</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplos</h4>
+                        <pre><code>// Imprimir literal
+print 42
+
+// Imprimir variable
+x = 100
+print x
+
+// Imprimir resultado de expresión
+a = 5
+b = 3
+c = a + b
+print c</code></pre>
+                        <p class="text-muted small mb-0">
+                            Salida: <code>42</code>, <code>100</code>, <code>8</code>
+                        </p>
+                    </div>
+                    
+                    <h3>Instrucción end</h3>
+                    
+                    <h4>Sintaxis</h4>
+                    <div class="syntax-box">
+                        <code>end</code>
+                    </div>
+                    
+                    <p>
+                        La instrucción <code>end</code> detiene la ejecución del programa inmediatamente.
+                    </p>
+                    
+                    <h4>Comportamiento</h4>
+                    <ul>
+                        <li>Termina la ejecución del intérprete</li>
+                        <li>No se ejecutan más instrucciones después de <code>end</code></li>
+                        <li>Es obligatoria para indicar el fin del programa</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplo</h4>
+                        <pre><code>x = 10
+print x
+end
+
+// Este código nunca se ejecuta
+x = 20
+print x</code></pre>
+                        <p class="text-muted small mb-0">
+                            Salida: Solo <code>10</code>. La segunda parte del código se ignora.
+                        </p>
+                    </div>
+                    
+                    <h3>Uso en Control de Flujo</h3>
+                    <p>
+                        La instrucción <code>end</code> se suele colocar al final del flujo principal, 
+                        después de que todas las ramas de ejecución converjan.
+                    </p>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplo: Estructura Completa</h4>
+                        <pre><code>n = 5
+if n > 0 goto Positivo
+
+print 0
+goto Fin
+
+Positivo:
+print 1
+
+Fin:
+end</code></pre>
+                    </div>
+                </section>
+
+                <!-- 9. Modelo de Ejecución -->
+                <section class="doc-section" id="modelo-ejecucion">
+                    <h2>9. Modelo de Ejecución</h2>
+                    
+                    <p>
+                        El intérprete de C3D implementa un modelo de ejecución secuencial con 
+                        soporte para saltos y control de flujo.
+                    </p>
+                    
+                    <h3>Componentes del Intérprete</h3>
+                    
+                    <h4>1. Tabla de Variables</h4>
+                    <p>
+                        El intérprete mantiene una <strong>tabla de símbolos</strong> (implementada como un Map) 
+                        que asocia cada identificador de variable con su valor actual.
+                    </p>
+                    <ul>
+                        <li>Las variables se crean dinámicamente al asignarles un valor</li>
+                        <li>Todos los valores son numéricos (punto flotante)</li>
+                        <li>El alcance es global (todas las variables están disponibles en todo el programa)</li>
+                    </ul>
+                    
+                    <h4>2. Tabla de Etiquetas</h4>
+                    <p>
+                        Durante la fase de análisis, el parser construye una <strong>tabla de etiquetas</strong> 
+                        que mapea cada nombre de etiqueta a su posición (índice de instrucción) en el programa.
+                    </p>
+                    <ul>
+                        <li>Se resuelve antes de la ejecución</li>
+                        <li>Permite saltos eficientes sin búsqueda lineal</li>
+                        <li>Valida que todas las etiquetas referenciadas existan</li>
+                    </ul>
+                    
+                    <h4>3. Program Counter (PC)</h4>
+                    <p>
+                        El <strong>contador de programa</strong> mantiene el índice de la instrucción actual en ejecución.
+                    </p>
+                    <ul>
+                        <li>Inicia en 0 (primera instrucción)</li>
+                        <li>Se incrementa secuencialmente después de cada instrucción</li>
+                        <li>Se modifica directamente por las instrucciones de salto (<code>goto</code>, <code>if ... goto</code>)</li>
+                    </ul>
+                    
+                    <h3>Proceso de Ejecución</h3>
+                    
+                    <p>La ejecución de un programa C3D sigue estos pasos:</p>
+                    
+                    <ol>
+                        <li>
+                            <strong>Fase de Análisis (Parse):</strong>
+                            <ul>
+                                <li>El código fuente se divide en líneas</li>
+                                <li>Se identifican y validan las etiquetas</li>
+                                <li>Cada línea se parsea en una estructura de instrucción</li>
+                                <li>Se construye la tabla de etiquetas</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Fase de Ejecución:</strong>
+                            <ul>
+                                <li>PC = 0</li>
+                                <li>Mientras PC < número de instrucciones:
+                                    <ul>
+                                        <li>Leer instrucción en PC</li>
+                                        <li>Ejecutar instrucción:
+                                            <ul>
+                                                <li>Resolver operandos (variables o literales)</li>
+                                                <li>Aplicar operación</li>
+                                                <li>Actualizar variables o realizar salto</li>
+                                            </ul>
+                                        </li>
+                                        <li>Si es <code>end</code>, terminar</li>
+                                        <li>PC = PC + 1 (o valor del salto)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                    
+                    <h3>Manejo de Errores</h3>
+                    <p>El intérprete detecta y reporta los siguientes errores:</p>
+                    <ul>
+                        <li><strong>Variable no definida:</strong> Se intenta usar una variable antes de asignarle un valor</li>
+                        <li><strong>Etiqueta no encontrada:</strong> Un <code>goto</code> referencia una etiqueta inexistente</li>
+                        <li><strong>División por cero:</strong> Se intenta dividir entre 0</li>
+                        <li><strong>Sintaxis inválida:</strong> Una línea no coincide con ninguna forma válida</li>
+                        <li><strong>Bucle infinito:</strong> Se alcanza el límite de 100,000 iteraciones</li>
+                    </ul>
+                    
+                    <h3>Optimizaciones</h3>
+                    <p>
+                        Esta implementación prioriza <strong>claridad y corrección</strong> sobre rendimiento. 
+                        No se aplican optimizaciones como:
+                    </p>
+                    <ul>
+                        <li>Eliminación de código muerto</li>
+                        <li>Propagación de constantes</li>
+                        <li>Plegado de constantes</li>
+                        <li>Eliminación de subexpresiones comunes</li>
+                    </ul>
+                </section>
+
+                <!-- 10. Representación Gráfica -->
+                <section class="doc-section" id="representacion-grafica">
+                    <h2>10. Representación Gráfica (GUI)</h2>
+                    
+                    <p>
+                        El playground genera automáticamente una representación visual del grafo de 
+                        flujo de control del programa usando <strong>Mermaid.js</strong>.
+                    </p>
+                    
+                    <h3>Generación de Bloques Básicos</h3>
+                    
+                    <p>
+                        El proceso de construcción del grafo consta de dos fases:
+                    </p>
+                    
+                    <h4>Fase 1: Identificación de Bloques</h4>
+                    <p>
+                        Un bloque básico se crea cuando:
+                    </p>
+                    <ul>
+                        <li>Se encuentra una nueva etiqueta</li>
+                        <li>Se ejecuta una instrucción de control de flujo (<code>goto</code>, <code>if ... goto</code>)</li>
+                        <li>Se alcanza el final del programa</li>
+                    </ul>
+                    
+                    <p>
+                        Cada bloque contiene:
+                    </p>
+                    <ul>
+                        <li>Nombre de la etiqueta que lo identifica</li>
+                        <li>Lista de instrucciones que contiene</li>
+                        <li>Índice de inicio y fin en el programa</li>
+                    </ul>
+                    
+                    <h4>Fase 2: Construcción de Aristas</h4>
+                    <p>
+                        Las aristas (edges) representan el flujo de control entre bloques. Se crean según estas reglas:
+                    </p>
+                    <ul>
+                        <li>Si el bloque termina con <code>goto Label</code>: se crea un edge hacia el bloque <code>Label</code></li>
+                        <li>Si el bloque termina con <code>if ... goto Label</code>: se crean dos edges:
+                            <ul>
+                                <li>Uno hacia <code>Label</code> (etiquetado "true")</li>
+                                <li>Otro hacia el siguiente bloque secuencial (etiquetado "false")</li>
+                            </ul>
+                        </li>
+                        <li>Si el bloque no termina con salto: se crea un edge hacia el siguiente bloque secuencial</li>
+                        <li>Si el bloque termina con <code>end</code>: no se crean edges (es un nodo terminal)</li>
+                    </ul>
+                    
+                    <h3>Visualización con Mermaid</h3>
+                    
+                    <p>
+                        El grafo se renderiza usando la sintaxis <code>graph TD</code> (Top-Down) de Mermaid.
+                    </p>
+                    
+                    <h4>Nodos</h4>
+                    <p>
+                        Cada bloque básico se representa como un nodo rectangular que contiene:
+                    </p>
+                    <ul>
+                        <li>El nombre de la etiqueta (encabezado)</li>
+                        <li>Las primeras instrucciones del bloque (hasta 4)</li>
+                        <li>Indicador "..." si hay más instrucciones</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>Ejemplo de Nodo</h4>
+                        <pre><code>Loop["Loop<br/>if i > n goto End<br/>result = result * i<br/>i = i + 1<br/>goto Loop"]</code></pre>
+                    </div>
+                    
+                    <h4>Aristas (Edges)</h4>
+                    
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tipo de Edge</th>
+                                <th>Representación</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Secuencial</td>
+                                <td><code>Bloque1 --> Bloque2</code></td>
+                                <td>Flujo secuencial normal entre bloques consecutivos</td>
+                            </tr>
+                            <tr>
+                                <td>Goto incondicional</td>
+                                <td><code>Bloque1 --> Target</code></td>
+                                <td>Salto directo sin evaluación de condición</td>
+                            </tr>
+                            <tr>
+                                <td>If-goto (true)</td>
+                                <td><code>Bloque1 -->|true| Target</code></td>
+                                <td>Salto condicional cuando la condición es verdadera</td>
+                            </tr>
+                            <tr>
+                                <td>If-goto (false)</td>
+                                <td><code>Bloque1 -->|false| Siguiente</code></td>
+                                <td>Flujo secuencial cuando la condición es falsa</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>Ejemplo Completo</h3>
+                    
+                    <div class="example-box">
+                        <h4>Código C3D</h4>
+                        <pre><code>n = 5
+result = 1
+i = 1
+
+Loop:
+if i > n goto End
+result = result * i
+i = i + 1
+goto Loop
+
+End:
+print result
+end</code></pre>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Bloques Básicos Generados</h4>
+                        <ul>
+                            <li><strong>INICIO:</strong> <code>n = 5</code>, <code>result = 1</code>, <code>i = 1</code></li>
+                            <li><strong>Loop:</strong> <code>if i > n goto End</code>, <code>result = result * i</code>, <code>i = i + 1</code>, <code>goto Loop</code></li>
+                            <li><strong>End:</strong> <code>print result</code>, <code>end</code></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Aristas Generadas</h4>
+                        <ul>
+                            <li>INICIO → Loop (secuencial)</li>
+                            <li>Loop → End (condicional true: <code>i > n</code>)</li>
+                            <li>Loop → Loop (condicional false + goto explícito)</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Interpretación del Grafo</h3>
+                    
+                    <p>
+                        El grafo de flujo de control permite:
+                    </p>
+                    <ul>
+                        <li><strong>Análisis de alcance:</strong> Identificar qué bloques son alcanzables desde el inicio</li>
+                        <li><strong>Detección de bucles:</strong> Visualizar ciclos en el flujo de control</li>
+                        <li><strong>Complejidad ciclomática:</strong> Evaluar la complejidad del programa</li>
+                        <li><strong>Código muerto:</strong> Identificar bloques que nunca se ejecutan</li>
+                        <li><strong>Optimización:</strong> Base para aplicar transformaciones de código</li>
+                    </ul>
+                </section>
+
+                <!-- Footer -->
+                <footer class="mt-5 pt-4 border-top text-center text-muted">
+                    <p>C3D Playground - Proyecto Educativo de Compiladores 2</p>
+                    <p class="small">
+                        <a href="index.html" class="text-decoration-none">Volver al Playground</a>
+                    </p>
+                </footer>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
