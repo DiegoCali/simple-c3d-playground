@@ -95,10 +95,22 @@ export class MermaidGraphBuilder {
                 return `${instr.variable} = ${instr.value}`;
             case 'print':
                 return `print ${instr.value}`;
+            case 'proc_start':
+                return `proc ${instr.name}`;
+            case 'call':
+                return `call ${instr.target}`;
             case 'goto':
                 return `goto ${instr.target}`;
             case 'if_goto':
                 return `if ${instr.condition} goto ${instr.target}`;
+            case 'stack_store':
+                return `pila[${instr.stackIndex}] = ${instr.value}`;
+            case 'stack_load':
+                return `${instr.variable} = pila[${instr.stackIndex}]`;
+            case 'return':
+                return 'return';
+            case 'endproc':
+                return 'endproc';
             case 'end':
                 return 'end';
             default:

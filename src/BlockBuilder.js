@@ -92,7 +92,9 @@ export class BasicBlocksBuilder {
     isControlFlowInstruction(instruction) {
         return instruction.type === 'goto' 
             || instruction.type === 'if_goto' 
-            || instruction.type === 'end';
+            || instruction.type === 'end'
+            || instruction.type === 'endproc'
+            || instruction.type === 'return';
     }
 
     /**
@@ -143,7 +145,7 @@ export class BasicBlocksBuilder {
                         label: 'false'
                     });
                 }
-            } else if (lastInstr.type !== 'end') {
+            } else if (lastInstr.type !== 'end' && lastInstr.type !== 'endproc' && lastInstr.type !== 'return') {
                 // Edge secuencial normal
                 if (i < this.blocks.length - 1) {
                     const nextBlock = this.blocks[i + 1];

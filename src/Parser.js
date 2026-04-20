@@ -35,6 +35,9 @@ export class C3DParser {
             } else {
                 const parsed = this.parseLine(line);
                 if (parsed) {
+                    if (parsed.type === 'proc_start') {
+                        labels.set(parsed.name, instructionIndex);
+                    }
                     instructionIndex++;
                 }
             }
@@ -52,10 +55,18 @@ export class C3DParser {
             } else {
                 const parsed = this.parseLine(line);
                 if (parsed) {
+                    if (parsed.type === 'proc_start') {
+                        currentLabel = parsed.name;
+                    }
+
                     parsed.label = currentLabel;
                     parsed.index = instructionIndex;
                     instructions.push(parsed);
                     instructionIndex++;
+
+                    if (parsed.type === 'endproc') {
+                        currentLabel = 'INICIO';
+                    }
                 }
             }
         }
@@ -71,9 +82,28 @@ export class C3DParser {
     preprocessCode(code) {
         return code
             .split('\n')
-            .map(line => line.trim())
+            .map(line => this.stripInlineComments(line).trim())
             .filter(line => line.length > 0)
             .filter(line => !line.startsWith('//') && !line.startsWith('#'));
+    }
+
+    /**
+     * Elimina comentarios inline simples
+     * @param {string} line
+     * @returns {string}
+     */
+    stripInlineComments(line) {
+        const markers = ['//', '#', '/*'];
+        let cutIndex = line.length;
+
+        markers.forEach(marker => {
+            const index = line.indexOf(marker);
+            if (index !== -1 && index < cutIndex) {
+                cutIndex = index;
+            }
+        });
+
+        return line.slice(0, cutIndex);
     }
 
     /**
@@ -100,25 +130,71 @@ export class C3DParser {
      * @returns {Object|null}
      */
     parseLine(line) {
+        // Marcador de apertura de bloque ignorado
+        if (line === '{') {
+            return null;
+        }
+
+        // Cierre de procedimiento por llave
+        if (line === '}') {
+            return { type: 'endproc' };
+        }
+
+        // inicio de procedimiento
+        const procMatch = line.match(/^proc(?:edure)?\s+([A-Za-z_]\w*)\s*(?:\([^)]*\))?\s*\{?$/i);
+        if (procMatch) {
+            return this.parseProcStart(procMatch);
+        }
+
         // end
-        if (line === 'end') {
+        if (/^end$/i.test(line)) {
             return { type: 'end' };
         }
 
+        // endproc
+        if (/^endproc$/i.test(line)) {
+            return { type: 'endproc' };
+        }
+
+        // return
+        if (/^return$/i.test(line)) {
+            return { type: 'return' };
+        }
+
         // print
-        if (line.startsWith('print ')) {
-            return this.parsePrint(line);
+        const printMatch = line.match(/^print\s+(.+)$/i);
+        if (printMatch) {
+            return this.parsePrint(printMatch);
+        }
+
+        // call
+        const callMatch = line.match(/^call\s+([A-Za-z_]\w*)(?:\s*\(\s*\))?$/i);
+        if (callMatch) {
+            return this.parseCall(callMatch);
         }
 
         // goto simple
-        if (line.startsWith('goto ')) {
-            return this.parseGoto(line);
+        const gotoMatch = line.match(/^goto\s+([A-Za-z_]\w*)$/i);
+        if (gotoMatch) {
+            return this.parseGoto(gotoMatch);
         }
 
         // if ... goto (condicional)
-        const ifGotoMatch = line.match(/^if\s+(.+?)\s+goto\s+(\w+)$/);
+        const ifGotoMatch = line.match(/^if\s+(.+?)\s+(?:then\s+)?goto\s+([A-Za-z_]\w*)$/i);
         if (ifGotoMatch) {
             return this.parseIfGoto(ifGotoMatch);
+        }
+
+        // Escritura a pila
+        const stackStoreMatch = line.match(/^(?:pila|stack)\s*\[\s*(.+?)\s*\]\s*=\s*(.+)$/i);
+        if (stackStoreMatch) {
+            return this.parseStackStore(stackStoreMatch);
+        }
+
+        // Lectura desde pila
+        const stackLoadMatch = line.match(/^(\w+)\s*=\s*(?:pila|stack)\s*\[\s*(.+?)\s*\]$/i);
+        if (stackLoadMatch) {
+            return this.parseStackLoad(stackLoadMatch);
         }
 
         // Asignación
@@ -135,9 +211,33 @@ export class C3DParser {
      * @param {string} line
      * @returns {Object}
      */
-    parsePrint(line) {
-        const value = line.substring(6).trim();
+    parsePrint(match) {
+        const value = match[1].trim();
         return { type: 'print', value };
+    }
+
+    /**
+     * Parsea inicio de procedimiento
+     * @param {Array} match
+     * @returns {Object}
+     */
+    parseProcStart(match) {
+        return {
+            type: 'proc_start',
+            name: match[1].trim()
+        };
+    }
+
+    /**
+     * Parsea instrucción call
+     * @param {Array} match
+     * @returns {Object}
+     */
+    parseCall(match) {
+        return {
+            type: 'call',
+            target: match[1].trim()
+        };
     }
 
     /**
@@ -145,8 +245,8 @@ export class C3DParser {
      * @param {string} line
      * @returns {Object}
      */
-    parseGoto(line) {
-        const target = line.substring(5).trim();
+    parseGoto(match) {
+        const target = match[1].trim();
         return { type: 'goto', target };
     }
 
@@ -162,6 +262,32 @@ export class C3DParser {
             type: 'if_goto', 
             condition, 
             target 
+        };
+    }
+
+    /**
+     * Parsea escritura en pila: pila[idx] = valor
+     * @param {Array} match
+     * @returns {Object}
+     */
+    parseStackStore(match) {
+        return {
+            type: 'stack_store',
+            stackIndex: match[1].trim(),
+            value: match[2].trim()
+        };
+    }
+
+    /**
+     * Parsea lectura de pila: var = pila[idx]
+     * @param {Array} match
+     * @returns {Object}
+     */
+    parseStackLoad(match) {
+        return {
+            type: 'stack_load',
+            variable: match[1].trim(),
+            stackIndex: match[2].trim()
         };
     }
 

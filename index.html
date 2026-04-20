@@ -39,6 +39,8 @@
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group me-2" role="group">
                         <button type="button" class="btn btn-primary" id="runBtn">Ejecutar</button>
+                        <button type="button" class="btn btn-outline-primary" id="stepBtn">Step</button>
+                        <button type="button" class="btn btn-outline-warning" id="resetBtn">Reiniciar</button>
                         <button type="button" class="btn btn-secondary" id="clearBtn">Limpiar</button>
                         <button type="button" class="btn btn-outline-secondary" id="exampleBtn">Cargar Ejemplo</button>
                     </div>
@@ -67,8 +69,20 @@
                         <h6 class="mb-0">Salida</h6>
                     </div>
                     <div class="card-body">
+                        <div id="debugInfo" class="debug-info mb-2"></div>
                         <div id="output" class="output-panel"></div>
                         <div id="variablesDisplay" class="mt-3"></div>
+                    </div>
+                </div>
+
+                <!-- Stack Panel -->
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">Stack (20 celdas)</h6>
+                        <small class="text-muted" id="stackPointerLabel">pos = 0</small>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="stackDisplay" class="stack-panel"></div>
                     </div>
                 </div>
 

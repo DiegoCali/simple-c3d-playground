@@ -35,6 +35,17 @@ body {
     white-space: pre-wrap;
 }
 
+.debug-info {
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 12px;
+    color: #495057;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 8px;
+    min-height: 34px;
+}
+
 .output-line {
     margin: 2px 0;
 }
@@ -84,6 +95,41 @@ body {
 
 .variable-value {
     color: #198754;
+}
+
+/* Stack Display */
+.stack-panel {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 12px;
+}
+
+.stack-table thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: left;
+}
+
+.stack-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.stack-row-active {
+    background-color: #e7f1ff;
+}
+
+.stack-row-active td {
+    font-weight: 600;
 }
 
 /* Graph Container for Mermaid */
@@ -145,6 +191,10 @@ body {
     .output-panel {
         min-height: 120px;
         max-height: 150px;
+    }
+
+    .stack-panel {
+        max-height: 220px;
     }
     
     .graph-container {
